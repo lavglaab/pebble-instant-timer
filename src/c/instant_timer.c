@@ -1620,6 +1620,11 @@ static void main_window_load(Window *window) {
     // status bar
     s_status_bar = status_bar_layer_create();
     layer_add_child(window_layer, status_bar_layer_get_layer(s_status_bar));
+#if defined(PBL_RECT)
+    // Inset statusbar to not overlap the actionbar
+    const GRect status_bar_frame = GRect(0, 0, layer_get_bounds(window_layer).size.w - ACTION_BAR_WIDTH, STATUS_BAR_LAYER_HEIGHT);
+    layer_set_frame(status_bar_layer_get_layer(s_status_bar), status_bar_frame);
+#endif // PBL_RECT
 
     // touch selector
 #if PBL_TOUCH
